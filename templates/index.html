@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GAN Dashboard</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background: linear-gradient(135deg,#ffd6e0,#d0f4de,#cdb4db);
+            text-align:center;
+            padding:40px;
+        }
+
+        .card {
+            background:white;
+            padding:30px;
+            border-radius:20px;
+            width:80%;
+            margin:auto;
+            box-shadow:0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color:#6d6875;
+        }
+
+        input {
+            padding:10px;
+            border-radius:10px;
+            border:none;
+            width:150px;
+            font-size:16px;
+        }
+
+        button {
+            padding:10px 20px;
+            border:none;
+            border-radius:10px;
+            background:#bde0fe;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        button:hover {
+            background:#a2d2ff;
+        }
+
+        .gallery {
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:center;
+            gap:10px;
+            margin-top:20px;
+        }
+
+        .gallery img {
+            border-radius:10px;
+            width:100px;
+        }
+
+        .metrics {
+            margin-top:30px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>✨ Vanilla GAN Image Generator ✨</h1>
+
+    <form method="POST">
+        <input type="number" name="epochs" placeholder="Epochs" required>
+        <button type="submit">Train</button>
+    </form>
+
+    <h2>Generated Images</h2>
+
+    <div class="gallery">
+        {% for img in images %}
+            {% if img != 'metrics.png' %}
+                <img src="{{ url_for('static', filename='generated/' + img) }}">
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% if metrics_img %}
+    <div class="metrics">
+        <h2>Training Performance</h2>
+        <img src="{{ url_for('static', filename='generated/' + metrics_img) }}" width="500">
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
